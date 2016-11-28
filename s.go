@@ -65,3 +65,14 @@ func After(pattern string, f func(*C)) {
 func Serve(port int) {
 	panic(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
+
+func (c *C) String(code int, s string) {
+	c.w.WriteHeader(code)
+	c.w.Write([]byte(s))
+}
+
+func (c *C) Html(code int, s string) {
+	c.w.Header().Set("Content-Type", "text/html")
+	c.w.WriteHeader(code)
+	c.w.Write([]byte(s))
+}
